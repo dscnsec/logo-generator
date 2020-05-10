@@ -2,9 +2,10 @@ import React from 'react';
 import GDGEditor from './GDGEditor'
 import DSCEditor from './DSCEditor'
 import WTMEditor from './WTMEditor'
-import { AppBar, Box, Container, Tabs, Tab } from '@material-ui/core';
+import { AppBar, BottomNavigation, Box, Container, Link, Tabs, Tab, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import GitHubButton from 'react-github-btn'
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -47,6 +48,11 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		backgroundColor: theme.palette.background.paper,
 	},
+	stickToBottom: {
+		width: '100%',
+		position: 'fixed',
+		bottom: 0,
+	},
 }));
 
 export default function ScrollableTabsButtonAuto() {
@@ -73,14 +79,29 @@ export default function ScrollableTabsButtonAuto() {
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
-				<GDGEditor/>
+				<GDGEditor />
 			</TabPanel>
 			<TabPanel value={value} index={1}>
-				<DSCEditor/>
+				<DSCEditor />
 			</TabPanel>
 			<TabPanel value={value} index={2}>
 				<WTMEditor />
 			</TabPanel>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<BottomNavigation className={classes.stickToBottom}>
+			<GitHubButton href="https://github.com/dscnsec/logo-generator" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star dscnsec/logo-generator on GitHub">Star</GitHubButton>
+				
+				<Typography>
+				&nbsp;&middot;&nbsp;Created by&nbsp;
+					<Link href="https://xprilion.com" target="_blank">
+						@xprilion
+					</Link>
+				</Typography>
+			</BottomNavigation>
 		</div>
 	);
 }

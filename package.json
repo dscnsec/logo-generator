@@ -18,6 +18,7 @@
     "node-sass": "^4.14.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-github-btn": "^1.2.0",
     "react-responsive-canvas": "^1.0.2",
     "react-scripts": "latest",
     "webfontloader": "^1.6.28"
