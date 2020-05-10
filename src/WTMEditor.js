@@ -89,7 +89,7 @@ class WTMEditor extends Component {
               color="primary"
               href={this.state.fullLogoUrlOld}
               style={{ margin: "5px" }}
-              download={`WTM ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+              download={`WTM ${this.state.name} Light Horizontal-Logo.png`}
             >
               DOWNLOAD
             </Button>
@@ -114,7 +114,7 @@ class WTMEditor extends Component {
               color="primary"
               href={this.state.fullLogoUrlVerticalOld}
               style={{ margin: "5px" }}
-              download={`WTM ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+              download={`WTM ${this.state.name} Light Vertical-Logo.png`}
             >
               DOWNLOAD
             </Button>
