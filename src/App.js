@@ -1,6 +1,7 @@
 import React from 'react';
 import GDGEditor from './GDGEditor'
 import DSCEditor from './DSCEditor'
+import WTMEditor from './WTMEditor'
 import { AppBar, Box, Container, Tabs, Tab } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ScrollableTabsButtonAuto() {
 	const classes = useStyles();
-	const [value, setValue] = React.useState(0);
+	const [value, setValue] = React.useState(2);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -68,7 +69,7 @@ export default function ScrollableTabsButtonAuto() {
 				>
 					<Tab label="GDG" {...a11yProps(0)} />
 					<Tab label="DSC" {...a11yProps(1)} />
-					{/* <Tab label="DevFest" {...a11yProps(2)} /> */}
+					<Tab label="WTM" {...a11yProps(2)} />
 				</Tabs>
 			</AppBar>
 			<TabPanel value={value} index={0}>
@@ -77,9 +78,9 @@ export default function ScrollableTabsButtonAuto() {
 			<TabPanel value={value} index={1}>
 				<DSCEditor/>
 			</TabPanel>
-			{/* <TabPanel value={value} index={2}>
-				Item Three
-			</TabPanel> */}
+			<TabPanel value={value} index={2}>
+				<WTMEditor />
+			</TabPanel>
 		</div>
 	);
 }
