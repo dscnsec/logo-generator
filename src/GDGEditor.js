@@ -114,7 +114,7 @@ class GDGEditor extends Component {
                 color="primary"
                 href={this.state.bwImageUrl}
                 style={{ margin: "5px" }}
-                download={`GDG ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                download={`GDG ${this.state.name} Dark Horizontal-Logo.png`}
               >
                 DOWNLOAD
               </Button>
@@ -140,7 +140,7 @@ class GDGEditor extends Component {
                   color="primary"
                   href={this.state.colorImageUrl}
                   style={{ margin: "5px" }}
-                  download={`GDG ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                  download={`GDG ${this.state.name} Light Horizontal-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>

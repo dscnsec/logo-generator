@@ -121,7 +121,7 @@ class DSCEditor extends Component {
                   color="primary"
                   href={this.state.fullLogoUrl}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                  download={`DSC ${this.state.name} Dark Horizontal-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -146,7 +146,7 @@ class DSCEditor extends Component {
                   color="primary"
                   href={this.state.fullLogoUrlVertical}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                  download={`DSC ${this.state.name} Dark Vertical-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -174,7 +174,7 @@ class DSCEditor extends Component {
                   color="primary"
                   href={this.state.fullLogoUrlOld}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                  download={`DSC ${this.state.name} Light Horizontal-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -199,7 +199,7 @@ class DSCEditor extends Component {
                   color="primary"
                   href={this.state.fullLogoUrlVerticalOld}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark X-Logo x${this.state.scale}.png`}
+                  download={`DSC ${this.state.name} Light Vertical-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
