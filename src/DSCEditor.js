@@ -252,7 +252,7 @@ class DSCEditor extends Component {
     this.logoScale = 2.35;
 
     const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
-    const canvasHeight = this.dscLogo.height * this.logoScale + 150;
+    const canvasHeight = this.dscLogo.height * this.logoScale + 100;
 
     this.logoCanvas.setAttribute("width", canvasWidth * scale);
     this.logoCanvas.setAttribute("height", canvasHeight * scale);
@@ -324,7 +324,7 @@ class DSCEditor extends Component {
     this.logoScale = 2.35;
 
     const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
-    const canvasHeight = this.dscLogo.height * this.logoScale + 150;
+    const canvasHeight = this.dscLogo.height * this.logoScale + 100;
 
     this.logoCanvas.setAttribute("width", canvasWidth * scale);
     this.logoCanvas.setAttribute("height", canvasHeight * scale);

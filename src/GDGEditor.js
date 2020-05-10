@@ -190,7 +190,7 @@ class GDGEditor extends Component {
     this.logoScale = 1.35;
 
     const canvasWidth = ctx.measureText("GDG").width + ctx.measureText(this.state.name).width + this.GDGLogo.width * this.logoScale + 80;
-    const canvasHeight = this.GDGLogo.height + 80;
+    const canvasHeight = this.GDGLogo.height + 60;
 
     this.logoCanvas.setAttribute("width", canvasWidth * scale);
     this.logoCanvas.setAttribute("height", canvasHeight * scale);

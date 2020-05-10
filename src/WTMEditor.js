@@ -135,8 +135,8 @@ class WTMEditor extends Component {
 
     this.logoScale = 0.25;
 
-    const canvasWidth = Math.max(ctx.measureText("Women Techmakers").width, ctx.measureText(this.state.name).width) + this.wtmLogo.width * this.logoScale + 1200;
-    const canvasHeight = this.wtmLogo.height * this.logoScale + 100;
+    const canvasWidth = Math.max(ctx.measureText("Women Techmakers").width, ctx.measureText(this.state.name).width) + this.wtmLogo.width * this.logoScale + 450;
+    const canvasHeight = this.wtmLogo.height * this.logoScale + 50;
 
     this.logoCanvas.setAttribute("width", canvasWidth * scale);
     this.logoCanvas.setAttribute("height", canvasHeight * scale);
@@ -168,7 +168,7 @@ class WTMEditor extends Component {
     this.logoScale = 0.5;
 
     const canvasWidth = (Math.max(ctx.measureText("Women Techmakers").width, ctx2.measureText(name).width) + 1500 );
-    const canvasHeight = this.wtmLogo.height * this.logoScale + 300;
+    const canvasHeight = this.wtmLogo.height * this.logoScale + 230;
 
     this.logoCanvas.setAttribute("width", canvasWidth * scale);
     this.logoCanvas.setAttribute("height", canvasHeight * scale);
