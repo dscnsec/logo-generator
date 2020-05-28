@@ -6,6 +6,11 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 
 import "./Editor.sass";
 
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 class WTMEditor extends Component {
   constructor(props) {
     super(props);
@@ -81,6 +86,7 @@ class WTMEditor extends Component {
                 src={this.state.fullLogoUrlOld}
                 style={{maxWidth: "100%"}}
               />
+              <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
             </CardContent>
           </CardActionArea>
           <CardActions>
@@ -106,6 +112,7 @@ class WTMEditor extends Component {
                 src={this.state.fullLogoUrlVerticalOld}
                 style={{maxWidth: "100%"}}
               />
+              <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
             </CardContent>
           </CardActionArea>
           <CardActions>

@@ -7,6 +7,12 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 
 import "./Editor.sass";
 
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+
 class GDGEditor extends Component {
   constructor(props) {
     super(props);
@@ -95,8 +101,8 @@ class GDGEditor extends Component {
         />
 
         {this.state.darkMode ? (
-          <Card style={{width: "100%"}}>
-            <CardActionArea style={{background: "#000"}}>
+          <Card style={{ width: "100%" }}>
+            <CardActionArea style={{ background: "#000" }}>
               <CardContent>
                 <img
                   ref={e => {
@@ -104,8 +110,10 @@ class GDGEditor extends Component {
                   }}
                   alt={`GDG ${this.state.name} Logo`}
                   src={this.state.bwImageUrl}
-                  style={{maxWidth: "100%"}}
+                  style={{ maxWidth: "100%" }}
                 />
+                <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
+
               </CardContent>
             </CardActionArea>
             <CardActions>
@@ -121,7 +129,7 @@ class GDGEditor extends Component {
             </CardActions>
           </Card>
         ) : (
-            <Card style={{width: "100%"}}>
+            <Card style={{ width: "100%" }}>
               <CardActionArea>
                 <CardContent>
                   <img
@@ -130,8 +138,9 @@ class GDGEditor extends Component {
                     }}
                     alt={`GDG ${this.state.name} Logo`}
                     src={this.state.colorImageUrl}
-                    style={{maxWidth: "100%"}}
+                    style={{ maxWidth: "100%" }}
                   />
+                  <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
                 </CardContent>
               </CardActionArea>
               <CardActions>
@@ -145,7 +154,9 @@ class GDGEditor extends Component {
                   DOWNLOAD
                 </Button>
               </CardActions>
+
             </Card>
+
           )}
       </div>
     );

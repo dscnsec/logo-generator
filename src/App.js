@@ -5,7 +5,7 @@ import WTMEditor from './WTMEditor'
 import { AppBar, BottomNavigation, Box, Container, Link, Tabs, Tab, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import GitHubButton from 'react-github-btn'
+import GitHubButton from 'react-github-btn';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
