@@ -4,14 +4,14 @@ A logo generator for all and any communities!
 
 # Communities Supported
 
-[x] Google Developer Groups
-[x] GDG Cloud
-[x] Women Techmakers
-[x] Developer Student Clubs
-[] Google Crowdsource
-[] TensorFlow User Group
-[] Local Guides
-[] Facebook Developer Circles
+- [x] Google Developer Groups
+- [x] GDG Cloud
+- [x] Women Techmakers
+- [x] Developer Student Clubs
+- [] Google Crowdsource
+- [] TensorFlow User Group
+- [] Local Guides
+- [] Facebook Developer Circles
 
 # Winter of Code Ideas
 
