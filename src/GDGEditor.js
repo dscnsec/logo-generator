@@ -13,7 +13,7 @@ function Alert(props) {
 }
 
 
-class GDGEditor extends Component {
+export default class GDGEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -226,5 +226,3 @@ class GDGEditor extends Component {
 const hidden = {
   display: "none"
 };
-
-export default GDGEditor;
