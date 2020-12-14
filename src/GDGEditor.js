@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MainToolBar from './MainToolBar'
 
 import WebFont from "webfontloader";
@@ -13,166 +13,53 @@ function Alert(props) {
 }
 
 
-class GDGEditor extends Component {
-  constructor(props) {
+function GDGEditor() {
+  /*constructor(props) {
     super(props);
     this.state = {
       scale: 0.6,
       name: "City Name",
       darkMode: false
     };
-  }
+  }*/
+  const GDGLogo = useRef(null);
+  const logoCanvas = useRef(null);
+  const fullLogoImg = useRef(null)
+  const [Scale, setScale] = useState(0.6);
+  const [Name, setName] = useState("City Name");
+  const [Mode, setMode] = useState(false);
+  const [bwImageUrl, setbwImageUrl] = useState();
+  const [colorImageUrl, setcolorImageUrl] = useState();
 
-  componentDidMount() {
+  let LogoScale = 2.35;
+
+  useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto:400", "Product Sans", "Product Sans:400"]
       },
       fontactive: (familyName, fvd) => {
-        this.bwImage();
-        this.colorImage();
+        bwImage();
+        colorImage();
       }
     });
-  }
+  }, [])
 
-  handleDarkMode = (mode) => {
-    this.setState({ darkMode: mode });
+  const handleDarkMode = (mode) => {
+    setMode(mode)
   };
 
-  render() {
-    return (
-      <div className="main">
-        <MainToolBar
-          toDark={this.handleDarkMode}
-          darkMode={this.state.darkMode}
-          id="GDGToolbar"
-        />
-        <div style={hidden}>
-          {this.state.darkMode ? (
-            <img
-              ref={e => {
-                this.GDGLogo = e;
-              }}
-              onLoad={() => {
-                this.bwImage();
-              }}
-              src="assets/gdg/bw.svg"
-              alt={`GDG Icon`}
-            />
-          ) : (
-              <img
-                ref={e => {
-                  this.GDGLogo = e;
-                }}
-                onLoad={() => {
-                  this.colorImage();
-                }}
-                src="assets/gdg/color.svg"
-                alt={`GDG Icon`}
-              />
-            )}
-        </div>
-
-        <TextField
-          label="City Name"
-          margin="normal"
-          variant="outlined"
-          style={{
-            width: "100%"
-          }}
-          onChange={e => {
-            this.setState(
-              {
-                name: e.target.value
-              },
-              () => {
-                this.bwImage();
-                this.colorImage();
-              }
-            );
-          }}
-        />
-        <br />
-        <canvas
-          style={hidden}
-          ref={e => {
-            this.logoCanvas = e;
-          }}
-        />
-
-        {this.state.darkMode ? (
-          <Card style={{ width: "100%" }}>
-            <CardActionArea style={{ background: "#000" }}>
-              <CardContent>
-                <img
-                  ref={e => {
-                    this.fullLogoImg = e;
-                  }}
-                  alt={`GDG ${this.state.name} Logo`}
-                  src={this.state.bwImageUrl}
-                  style={{ maxWidth: "100%" }}
-                />
-                <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
-
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              <Button
-                variant="contained"
-                color="primary"
-                href={this.state.bwImageUrl}
-                style={{ margin: "5px" }}
-                download={`GDG ${this.state.name} Dark Horizontal-Logo.png`}
-              >
-                DOWNLOAD
-              </Button>
-            </CardActions>
-          </Card>
-        ) : (
-            <Card style={{ width: "100%" }}>
-              <CardActionArea>
-                <CardContent>
-                  <img
-                    ref={e => {
-                      this.fullLogoImg = e;
-                    }}
-                    alt={`GDG ${this.state.name} Logo`}
-                    src={this.state.colorImageUrl}
-                    style={{ maxWidth: "100%" }}
-                  />
-                  <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href={this.state.colorImageUrl}
-                  style={{ margin: "5px" }}
-                  download={`GDG ${this.state.name} Light Horizontal-Logo.png`}
-                >
-                  DOWNLOAD
-                </Button>
-              </CardActions>
-
-            </Card>
-
-          )}
-      </div>
-    );
-  }
-
-  bwImage() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
+  const bwImage = () => {
+    const name = Name;
+    const scale = Scale;
+    const ctx = logoCanvas.current.getContext("2d");
     ctx.font = `400 96px "Product Sans"`;
-    this.logoScale = 1.35;
+    LogoScale = 1.35;
 
-    const canvasWidth = ctx.measureText("GDG").width + ctx.measureText(this.state.name).width + this.GDGLogo.width * this.logoScale + 80;
-    const canvasHeight = this.GDGLogo.height + 80;
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
+    const canvasWidth = ctx.measureText("GDG").width + ctx.measureText(name).width + GDGLogo.current.width * LogoScale + 80;
+    const canvasHeight = GDGLogo.current.height + 80;
+    logoCanvas.current.setAttribute("width", canvasWidth * scale);
+    logoCanvas.current.setAttribute("height", canvasHeight * scale);
 
     ctx.scale(scale, scale);
     // ctx.fillStyle = "#000";
@@ -180,47 +67,159 @@ class GDGEditor extends Component {
     // ctx.fillRect(0, 0, canvasWidth, canvasHeight);
     ctx.fillStyle = "#fff";
 
-    ctx.drawImage(this.GDGLogo, 20, 0, this.GDGLogo.width * this.logoScale, this.GDGLogo.height * this.logoScale);
+    ctx.drawImage(GDGLogo.current, 20, 0, GDGLogo.current.width * LogoScale, GDGLogo.current.height * LogoScale);
 
-    ctx.fillText("GDG", this.GDGLogo.width * this.logoScale + 50, 137);
+    ctx.fillText("GDG", GDGLogo.current.width * LogoScale + 50, 137);
 
     ctx.font = `400 96px "Product Sans"`;
-    ctx.fillText(name, this.GDGLogo.width * this.logoScale + ctx.measureText("GDG").width + 70, 137);
+    ctx.fillText(name, GDGLogo.current.width * LogoScale + ctx.measureText("GDG").width + 70, 137);
 
-    this.setState({
-      bwImageUrl: this.logoCanvas.toDataURL()
-    });
+    setbwImageUrl(logoCanvas.current.toDataURL())
   }
 
-  colorImage() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
+  const colorImage = () => {
+    const name = Name;
+    const scale = Scale;
+    const ctx = logoCanvas.current.getContext("2d");
     ctx.font = `400 96px "Product Sans"`;
 
-    this.logoScale = 1.35;
+    LogoScale = 1.35;
 
-    const canvasWidth = ctx.measureText("GDG").width + ctx.measureText(this.state.name).width + this.GDGLogo.width * this.logoScale + 80;
-    const canvasHeight = this.GDGLogo.height + 60;
+    const canvasWidth = ctx.measureText("GDG").width + ctx.measureText(name).width + GDGLogo.current.width * LogoScale + 80;
+    const canvasHeight = GDGLogo.current.height + 60;
 
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
+    logoCanvas.current.setAttribute("width", canvasWidth * scale);
+    logoCanvas.current.setAttribute("height", canvasHeight * scale);
 
     ctx.scale(scale, scale);
     ctx.font = `400 96px "Product Sans"`;
     ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
 
-    ctx.drawImage(this.GDGLogo, 20, 0, this.GDGLogo.width * this.logoScale, this.GDGLogo.height * this.logoScale);
+    ctx.drawImage(GDGLogo.current, 20, 0, GDGLogo.current.width * LogoScale, GDGLogo.current.height * LogoScale);
 
-    ctx.fillText("GDG", this.GDGLogo.width * this.logoScale + 50, 137);
+    ctx.fillText("GDG", GDGLogo.current.width * LogoScale + 50, 137);
 
     ctx.font = `400 96px "Product Sans"`;
-    ctx.fillText(name, this.GDGLogo.width * this.logoScale + ctx.measureText("GDG").width + 70, 137);
+    ctx.fillText(name, GDGLogo.current.width * LogoScale + ctx.measureText("GDG").width + 70, 137);
 
-    this.setState({
-      colorImageUrl: this.logoCanvas.toDataURL()
-    });
+    setcolorImageUrl(logoCanvas.current.toDataURL())
   }
+
+
+  return (
+    <div className="main">
+      <MainToolBar
+        toDark={handleDarkMode}
+        darkMode={Mode}
+        id="GDGToolbar"
+      />
+      <div style={hidden}>
+        {Mode ? (
+          <img
+            ref={
+              GDGLogo
+            }
+            onLoad={() => {
+              bwImage();
+            }}
+            src="assets/gdg/bw.svg"
+            alt={`GDG Icon`}
+          />
+        ) : (
+            <img
+              ref={
+                GDGLogo
+              }
+              onLoad={() => {
+                colorImage();
+              }}
+              src="assets/gdg/color.svg"
+              alt={`GDG Icon`}
+            />
+          )}
+      </div>
+
+      <TextField
+        label="City Name"
+        margin="normal"
+        variant="outlined"
+        style={{
+          width: "100%"
+        }}
+        onChange={(e) => { setName(e.target.value) },
+          () => {
+            bwImage();
+            colorImage();
+          }
+
+        }
+      />
+      <br />
+      <canvas
+        style={hidden}
+        ref={
+          logoCanvas
+        }
+      />
+
+      {Mode ? (
+        <Card style={{ width: "100%" }}>
+          <CardActionArea style={{ background: "#000" }}>
+            <CardContent>
+              <img
+                ref={fullLogoImg}
+                alt={`GDG ${Name} Logo`}
+                src={bwImageUrl}
+                style={{ maxWidth: "100%" }}
+              />
+              <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
+
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button
+              variant="contained"
+              color="primary"
+              href={bwImageUrl}
+              style={{ margin: "5px" }}
+              download={`GDG ${Name} Dark Horizontal-Logo.png`}
+            >
+              DOWNLOAD
+              </Button>
+          </CardActions>
+        </Card>
+      ) : (
+          <Card style={{ width: "100%" }}>
+            <CardActionArea>
+              <CardContent>
+                <img
+                  ref={
+                    fullLogoImg
+                  }
+                  alt={`GDG ${Name} Logo`}
+                  src={colorImageUrl}
+                  style={{ maxWidth: "100%" }}
+                />
+                <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button
+                variant="contained"
+                color="primary"
+                href={colorImageUrl}
+                style={{ margin: "5px" }}
+                download={`GDG ${Name} Light Horizontal-Logo.png`}
+              >
+                DOWNLOAD
+                </Button>
+            </CardActions>
+
+          </Card>
+
+        )}
+    </div>
+  );
 }
 
 const hidden = {
