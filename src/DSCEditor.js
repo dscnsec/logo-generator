@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
+import React , {useState, useRef, useEffect} from "react";
 import MainToolBar from './MainToolBar'
 
 import WebFont from "webfontloader";
@@ -12,63 +13,240 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-class DSCEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scale: 0.5,
-      name: "School Name",
-      darkMode: false
-    };
-  }
+const DSCEditor = function () {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     scale: 0.5,
+  //     name: "School Name",
+  //     darkMode: false
+  //   };
+  const dscLogo = useRef(null);
+  const logoCanvas = useRef(null);
+  const fullLogoImg = useRef(null)
+   const [canvasScale , setScale] = useState(0.5);
+   const [logoName, setName] = useState("School Name");
+   const [darkMode, setMode] = useState(false);
+   const [fullLogoUrl, setFullLogoUrl] = useState();
+   const [fullLogoUrlVertical, setFullLogoUrlVertical] = useState();
+   const [fullLogoUrlOld, setFullLogoUrlOld] = useState();
+   const [fullLogoUrlVerticalOld, setFullLogoUrlVerticalOld] = useState();
 
-  componentDidMount() {
+  let LogoScale = 2.35;
+  // componentDidMount() {
+  //   WebFont.load({
+  //     google: {
+  //       families: ["Roboto:400", "Product Sans", "Product Sans:400"]
+  //     },
+  //     fontactive: (familyName, fvd) => {
+  //       this.bwImageHorizontal();
+  //       this.colorImage();
+  //       this.colorImageVertical();
+  //       this.bwImageVertical();
+  //     }
+  //   });
+  // }
+  useEffect(() => {
+    
     WebFont.load({
-      google: {
-        families: ["Roboto:400", "Product Sans", "Product Sans:400"]
-      },
-      fontactive: (familyName, fvd) => {
-        this.bwImageHorizontal();
-        this.colorImage();
-        this.colorImageVertical();
-        this.bwImageVertical();
-      }
-    });
-  }
+          google: {
+            families: ["Roboto:400", "Product Sans", "Product Sans:400"]
+          },
+          fontactive: (familyName, fvd) => {
+           bwImageHorizontal();
+            colorImage();
+            colorImageVertical();
+            bwImageVertical();
+          }
+        });
+  },[]);
 
-  handleDarkMode =  (mode) => {
-    this.setState({ darkMode: mode });
-  };
+  useEffect(() => {
+    bwImageHorizontal();
+    colorImage();
+    bwImageVertical();
+    colorImageVertical();
+ }, [logoName]);
 
-  render() {
+  // handleDarkMode =  (mode) => {
+  //   this.setState({ darkMode: mode });
+  // };
+const handleDarkMode = (mode) =>{
+  setMode(mode);
+};
+
+const bwImageHorizontal =()=> {
+  const name = logoName;
+  const scale = canvasScale;
+  const ctx = logoCanvas.current.getContext("2d");
+  ctx.font = `400 96px "Product Sans"`;
+  LogoScale = 1.36;
+
+  const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
+  const canvasHeight = dscLogo.current.height + 150;
+
+  logoCanvas.current.setAttribute("width", canvasWidth * scale);
+  logoCanvas.current.setAttribute("height", canvasHeight * scale);
+
+  ctx.scale(scale, scale);
+  ctx.font = `400 96px "Product Sans"`;
+  ctx.fillStyle = "#fff";
+
+  ctx.drawImage(dscLogo.current, 20, 0, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
+
+  ctx.fillText("Developer Student Clubs", dscLogo.current.width + 112, 132);
+
+  ctx.font = `400 66px "Product Sans"`;
+  ctx.fillText(name, dscLogo.current.width + 112, 243);
+
+  // this.setState({
+  //   fullLogoUrl: logoCanvas.current.toDataURL()
+  // });
+
+  setFullLogoUrl(logoCanvas.current.toDataURL())
+}
+
+const bwImageVertical =()=>{
+  const name = logoName;
+  const scale = canvasScale;
+  const ctx = logoCanvas.current.getContext("2d");
+  const ctx2 = logoCanvas.current.getContext("2d");
+  ctx.font = `400 91px "Product Sans"`;
+  ctx2.font = `400 62px "Product Sans"`;
+
+  LogoScale = 2.35;
+
+  const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
+  const canvasHeight = dscLogo.current.height * LogoScale + 100;
+
+  logoCanvas.current.setAttribute("width", canvasWidth * scale);
+  logoCanvas.current.setAttribute("height", canvasHeight * scale);
+
+  ctx.scale(scale, scale);
+  ctx.font = `400 94px "Product Sans"`;
+  ctx.fillStyle = "#fff";
+
+  ctx.drawImage(dscLogo.current, canvasWidth/2 - (dscLogo.current.width * LogoScale)/2, -0.25 * dscLogo.current.height * LogoScale, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
+
+  ctx.textBaseline = "bottom";
+  // ctx.textAlign = "center";
+  ctx.fillText(
+    "Developer Student Clubs",
+    canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
+    dscLogo.current.height * LogoScale + 10
+  );
+
+  ctx.font = `400 62px "Product Sans"`;
+  ctx.textBaseline = "bottom";
+  // ctx.textAlign = "center";
+  ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), dscLogo.current.height * LogoScale + 100);
+
+  // this.setState({
+  //   fullLogoUrlVertical: logoCanvas.current.toDataURL()
+  // });
+
+  setFullLogoUrlVertical(logoCanvas.current.toDataURL())
+}
+
+const colorImage =()=>{
+  const name = logoName;
+  const scale = canvasScale;
+  const ctx = logoCanvas.current.getContext("2d");
+  const ctx2 = logoCanvas.current.getContext("2d");
+  ctx.font = `400 96px "Product Sans"`;
+  ctx2.font = `400 66px "Product Sans"`;
+
+  LogoScale = 1.36;
+
+  const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
+  const canvasHeight = dscLogo.current.height + 150;
+
+  logoCanvas.current.setAttribute("width", canvasWidth * scale);
+  logoCanvas.current.setAttribute("height", canvasHeight * scale);
+
+  ctx.scale(scale, scale);
+  ctx.font = `400 96px "Product Sans"`;
+  ctx.fillStyle = "rgba(0, 0, 0, 0.54)";
+
+  ctx.drawImage(dscLogo.current, 20, 0, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
+
+  ctx.fillText("Developer Student Clubs", dscLogo.current.width + 112, 132);
+
+  ctx.font = `400 66px "Product Sans"`;
+  ctx.fillText(name, dscLogo.current.width + 112, 243);
+
+  // this.setState({
+  //   fullLogoUrlOld: logoCanvas.current.toDataURL()
+  // });
+  setFullLogoUrlOld(logoCanvas.current.toDataURL())
+}
+
+const colorImageVertical=()=> {
+  const name = logoName;
+  const scale = canvasScale;
+  const ctx = logoCanvas.current.getContext("2d");
+  const ctx2 = logoCanvas.current.getContext("2d");
+  ctx.font = `400 91px "Product Sans"`;
+  ctx2.font = `400 62px "Product Sans"`;
+
+  LogoScale = 2.35;
+
+  const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
+  const canvasHeight = dscLogo.current.height * LogoScale + 100;
+
+  logoCanvas.current.setAttribute("width", canvasWidth * scale);
+  logoCanvas.current.setAttribute("height", canvasHeight * scale);
+
+  ctx.scale(scale, scale);
+  ctx.font = `400 91px "Product Sans"`;
+  ctx.fillStyle = "rgba(0, 0, 0, 0.54)";
+
+  ctx.drawImage(dscLogo.current, canvasWidth/2 - (dscLogo.current.width * LogoScale)/2, -0.25 * dscLogo.current.height * LogoScale, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
+
+  ctx.textBaseline = "bottom";
+  // ctx.textAlign = "center";
+  ctx.fillText(
+    "Developer Student Clubs",
+    canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
+    dscLogo.current.height * LogoScale + 10
+  );
+
+  ctx.font = `400 62px "Product Sans"`;
+  ctx.textBaseline = "bottom";
+  // ctx.textAlign = "center";
+  ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), dscLogo.current.height * LogoScale + 100);
+
+  // this.setState({
+  //   fullLogoUrlVerticalOld: logoCanvas.current.toDataURL()
+  // });
+  
+  setFullLogoUrlVerticalOld(logoCanvas.current.toDataURL())
+}
+  
     return (
       <div className="main">
         <MainToolBar
-          toDark={this.handleDarkMode}
-          darkMode={this.state.darkMode}
+          toDark={handleDarkMode}
+          darkMode={darkMode}
           id="DSCToolbar"
           />
         <div style={hidden}>
-          {this.state.darkMode ? (
+          {darkMode ? (
             <img
-              ref={e => {
-                this.dscLogo = e;
-              }}
+              ref={dscLogo}
               onLoad={() => {
-                this.bwImageHorizontal();
-                this.bwImageVertical();
+                bwImageHorizontal();
+                bwImageVertical();
               }}
               src="assets/dsc/bw.svg"
               alt={`DSC Icon`}
             />
           ) : (
             <img
-              ref={e => {
-                this.dscLogo = e;
-              }}
+              ref={dscLogo}
               onLoad={() => {
-                this.colorImage();
-                this.colorImageVertical();
+                colorImage();
+                colorImageVertical();
               }}
               src="assets/dsc/color.svg"
               alt={`DSC Icon`}
@@ -84,38 +262,35 @@ class DSCEditor extends Component {
               width: "100%"
           }}
           onChange={e => {
-            this.setState(
-              {
-                name: e.target.value
-              },
-              () => {
-                this.bwImageHorizontal();
-                this.colorImage();
-                this.bwImageVertical();
-                this.colorImageVertical();
-              }
-            );
+            // this.setState(
+            //   {
+            //     name: e.target.value
+            //   },
+            //   () => {
+            //     this.bwImageHorizontal();
+            //     this.colorImage();
+            //     this.bwImageVertical();
+            //     this.colorImageVertical();
+            //   }
+            // );
+            setName(e.target.value)
           }}
         />
         <br />
         <canvas
           style={hidden}
-          ref={e => {
-            this.logoCanvas = e;
-          }}
+          ref={logoCanvas}
         />
 
-        {this.state.darkMode ? (
+        {darkMode ? (
           <>
             <Card style={{width: "100%"}}>
               <CardActionArea style={{background: "#000"}}>
                 <CardContent>
                   <img
-                    ref={e => {
-                      this.fullLogoImg = e;
-                    }}
-                    alt={`DSC ${this.state.name} Logo`}
-                    src={this.state.fullLogoUrl}
+                    ref={fullLogoImg}
+                    alt={`DSC ${name} Logo`}
+                    src={fullLogoUrl}
                     style={{maxWidth: "100%"}}
                   />
                   <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
@@ -125,9 +300,9 @@ class DSCEditor extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  href={this.state.fullLogoUrl}
+                  href={fullLogoUrl}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark Horizontal-Logo.png`}
+                  download={`DSC ${logoName} Dark Horizontal-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -137,11 +312,9 @@ class DSCEditor extends Component {
               <CardActionArea style={{background: "#000"}}>
                 <CardContent>
                   <img
-                    ref={e => {
-                      this.fullLogoImg = e;
-                    }}
-                    alt={`DSC ${this.state.name} Logo`}
-                    src={this.state.fullLogoUrlVertical}
+                    ref={fullLogoImg}
+                    alt={`DSC ${logoName} Logo`}
+                    src={fullLogoUrlVertical}
                     style={{maxWidth: "100%"}}
                   />
                   <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
@@ -151,9 +324,9 @@ class DSCEditor extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  href={this.state.fullLogoUrlVertical}
+                  href={fullLogoUrlVertical}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Dark Vertical-Logo.png`}
+                  download={`DSC ${logoName} Dark Vertical-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -166,11 +339,9 @@ class DSCEditor extends Component {
               <CardActionArea>
                 <CardContent>
                   <img
-                    ref={e => {
-                      this.fullLogoImg = e;
-                    }}
-                    alt={`DSC ${this.state.name} Logo`}
-                    src={this.state.fullLogoUrlOld}
+                    ref={fullLogoImg}
+                    alt={`DSC ${logoName} Logo`}
+                    src={fullLogoUrlOld}
                     style={{maxWidth: "100%"}}
                   />
                   <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
@@ -180,9 +351,9 @@ class DSCEditor extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  href={this.state.fullLogoUrlOld}
+                  href={fullLogoUrlOld}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Light Horizontal-Logo.png`}
+                  download={`DSC ${logoName} Light Horizontal-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -192,11 +363,9 @@ class DSCEditor extends Component {
               <CardActionArea>
                 <CardContent>
                   <img
-                    ref={e => {
-                      this.fullLogoImg = e;
-                    }}
-                    alt={`DSC ${this.state.name} Logo`}
-                    src={this.state.fullLogoUrlVerticalOld}
+                    ref={fullLogoImg}
+                    alt={`DSC ${logoName} Logo`}
+                    src={fullLogoUrlVerticalOld}
                     style={{maxWidth: "100%"}}
                   />
                   <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
@@ -206,9 +375,9 @@ class DSCEditor extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  href={this.state.fullLogoUrlVerticalOld}
+                  href={fullLogoUrlVerticalOld}
                   style={{ margin: "5px" }}
-                  download={`DSC ${this.state.name} Light Vertical-Logo.png`}
+                  download={`DSC ${logoName} Light Vertical-Logo.png`}
                 >
                   DOWNLOAD
                 </Button>
@@ -218,149 +387,9 @@ class DSCEditor extends Component {
         )}
       </div>
     );
-  }
+  
 
-  bwImageHorizontal() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
-    ctx.font = `400 96px "Product Sans"`;
 
-    this.logoScale = 1.36;
-
-    const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(this.state.name).width) + this.dscLogo.width * this.logoScale + 600;
-    const canvasHeight = this.dscLogo.height + 150;
-
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
-
-    ctx.scale(scale, scale);
-    ctx.font = `400 96px "Product Sans"`;
-    ctx.fillStyle = "#fff";
-
-    ctx.drawImage(this.dscLogo, 20, 0, this.dscLogo.width * this.logoScale, this.dscLogo.height* this.logoScale);
-
-    ctx.fillText("Developer Student Clubs", this.dscLogo.width + 112, 132);
-
-    ctx.font = `400 66px "Product Sans"`;
-    ctx.fillText(name, this.dscLogo.width + 112, 243);
-
-    this.setState({
-      fullLogoUrl: this.logoCanvas.toDataURL()
-    });
-  }
-
-  bwImageVertical() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
-    const ctx2 = this.logoCanvas.getContext("2d");
-    ctx.font = `400 91px "Product Sans"`;
-    ctx2.font = `400 62px "Product Sans"`;
-
-    this.logoScale = 2.35;
-
-    const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
-    const canvasHeight = this.dscLogo.height * this.logoScale + 100;
-
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
-
-    ctx.scale(scale, scale);
-    ctx.font = `400 94px "Product Sans"`;
-    ctx.fillStyle = "#fff";
-
-    ctx.drawImage(this.dscLogo, canvasWidth/2 - (this.dscLogo.width * this.logoScale)/2, -0.25 * this.dscLogo.height * this.logoScale, this.dscLogo.width * this.logoScale, this.dscLogo.height* this.logoScale);
-
-    ctx.textBaseline = "bottom";
-    // ctx.textAlign = "center";
-    ctx.fillText(
-      "Developer Student Clubs",
-      canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
-      this.dscLogo.height * this.logoScale + 10
-    );
-
-    ctx.font = `400 62px "Product Sans"`;
-    ctx.textBaseline = "bottom";
-    // ctx.textAlign = "center";
-    ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), this.dscLogo.height * this.logoScale + 100);
-
-    this.setState({
-      fullLogoUrlVertical: this.logoCanvas.toDataURL()
-    });
-  }
-
-  colorImage() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
-    const ctx2 = this.logoCanvas.getContext("2d");
-    ctx.font = `400 96px "Product Sans"`;
-    ctx2.font = `400 66px "Product Sans"`;
-
-    this.logoScale = 1.36;
-
-    const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(this.state.name).width) + this.dscLogo.width * this.logoScale + 600;
-    const canvasHeight = this.dscLogo.height + 150;
-
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
-
-    ctx.scale(scale, scale);
-    ctx.font = `400 96px "Product Sans"`;
-    ctx.fillStyle = "rgba(0, 0, 0, 0.54)";
-
-    ctx.drawImage(this.dscLogo, 20, 0, this.dscLogo.width * this.logoScale, this.dscLogo.height* this.logoScale);
-
-    ctx.fillText("Developer Student Clubs", this.dscLogo.width + 112, 132);
-
-    ctx.font = `400 66px "Product Sans"`;
-    ctx.fillText(name, this.dscLogo.width + 112, 243);
-
-    this.setState({
-      fullLogoUrlOld: this.logoCanvas.toDataURL()
-    });
-  }
-
-  colorImageVertical() {
-    const name = this.state.name;
-    const scale = this.state.scale;
-    const ctx = this.logoCanvas.getContext("2d");
-    const ctx2 = this.logoCanvas.getContext("2d");
-    ctx.font = `400 91px "Product Sans"`;
-    ctx2.font = `400 62px "Product Sans"`;
-
-    this.logoScale = 2.35;
-
-    const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
-    const canvasHeight = this.dscLogo.height * this.logoScale + 100;
-
-    this.logoCanvas.setAttribute("width", canvasWidth * scale);
-    this.logoCanvas.setAttribute("height", canvasHeight * scale);
-
-    ctx.scale(scale, scale);
-    ctx.font = `400 91px "Product Sans"`;
-    ctx.fillStyle = "rgba(0, 0, 0, 0.54)";
-
-    ctx.drawImage(this.dscLogo, canvasWidth/2 - (this.dscLogo.width * this.logoScale)/2, -0.25 * this.dscLogo.height * this.logoScale, this.dscLogo.width * this.logoScale, this.dscLogo.height* this.logoScale);
-
-    ctx.textBaseline = "bottom";
-    // ctx.textAlign = "center";
-    ctx.fillText(
-      "Developer Student Clubs",
-      canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
-      this.dscLogo.height * this.logoScale + 10
-    );
-
-    ctx.font = `400 62px "Product Sans"`;
-    ctx.textBaseline = "bottom";
-    // ctx.textAlign = "center";
-    ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), this.dscLogo.height * this.logoScale + 100);
-
-    this.setState({
-      fullLogoUrlVerticalOld: this.logoCanvas.toDataURL()
-    });
-  }
 }
 
 const hidden = {
