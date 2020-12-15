@@ -1,4 +1,3 @@
-// import React, { Component } from "react";
 import React , {useState, useRef, useEffect} from "react";
 import MainToolBar from './MainToolBar'
 
@@ -14,13 +13,6 @@ function Alert(props) {
 }
 
 const DSCEditor = function () {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     scale: 0.5,
-  //     name: "School Name",
-  //     darkMode: false
-  //   };
   const dscLogo = useRef(null);
   const logoCanvas = useRef(null);
   const fullLogoImg = useRef(null)
@@ -33,19 +25,7 @@ const DSCEditor = function () {
    const [fullLogoUrlVerticalOld, setFullLogoUrlVerticalOld] = useState();
 
   let LogoScale = 2.35;
-  // componentDidMount() {
-  //   WebFont.load({
-  //     google: {
-  //       families: ["Roboto:400", "Product Sans", "Product Sans:400"]
-  //     },
-  //     fontactive: (familyName, fvd) => {
-  //       this.bwImageHorizontal();
-  //       this.colorImage();
-  //       this.colorImageVertical();
-  //       this.bwImageVertical();
-  //     }
-  //   });
-  // }
+
   useEffect(() => {
     
     WebFont.load({
@@ -68,9 +48,6 @@ const DSCEditor = function () {
     colorImageVertical();
  }, [logoName]);
 
-  // handleDarkMode =  (mode) => {
-  //   this.setState({ darkMode: mode });
-  // };
 const handleDarkMode = (mode) =>{
   setMode(mode);
 };
@@ -98,10 +75,6 @@ const bwImageHorizontal =()=> {
 
   ctx.font = `400 66px "Product Sans"`;
   ctx.fillText(name, dscLogo.current.width + 112, 243);
-
-  // this.setState({
-  //   fullLogoUrl: logoCanvas.current.toDataURL()
-  // });
 
   setFullLogoUrl(logoCanvas.current.toDataURL())
 }
@@ -141,10 +114,6 @@ const bwImageVertical =()=>{
   // ctx.textAlign = "center";
   ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), dscLogo.current.height * LogoScale + 100);
 
-  // this.setState({
-  //   fullLogoUrlVertical: logoCanvas.current.toDataURL()
-  // });
-
   setFullLogoUrlVertical(logoCanvas.current.toDataURL())
 }
 
@@ -174,10 +143,7 @@ const colorImage =()=>{
 
   ctx.font = `400 66px "Product Sans"`;
   ctx.fillText(name, dscLogo.current.width + 112, 243);
-
-  // this.setState({
-  //   fullLogoUrlOld: logoCanvas.current.toDataURL()
-  // });
+  
   setFullLogoUrlOld(logoCanvas.current.toDataURL())
 }
 
@@ -213,13 +179,8 @@ const colorImageVertical=()=> {
 
   ctx.font = `400 62px "Product Sans"`;
   ctx.textBaseline = "bottom";
-  // ctx.textAlign = "center";
   ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), dscLogo.current.height * LogoScale + 100);
 
-  // this.setState({
-  //   fullLogoUrlVerticalOld: logoCanvas.current.toDataURL()
-  // });
-  
   setFullLogoUrlVerticalOld(logoCanvas.current.toDataURL())
 }
   
@@ -262,17 +223,6 @@ const colorImageVertical=()=> {
               width: "100%"
           }}
           onChange={e => {
-            // this.setState(
-            //   {
-            //     name: e.target.value
-            //   },
-            //   () => {
-            //     this.bwImageHorizontal();
-            //     this.colorImage();
-            //     this.bwImageVertical();
-            //     this.colorImageVertical();
-            //   }
-            // );
             setName(e.target.value)
           }}
         />
