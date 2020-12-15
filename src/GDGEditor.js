@@ -43,7 +43,7 @@ function GDGEditor() {
         colorImage();
       }
     });
-  }, [])
+  })
 
   const handleDarkMode = (mode) => {
     setMode(mode)
@@ -146,13 +146,7 @@ function GDGEditor() {
         style={{
           width: "100%"
         }}
-        onChange={(e) => { setName(e.target.value) },
-          () => {
-            bwImage();
-            colorImage();
-          }
-
-        }
+        onChange={(e) => { setName(e.target.value) }}
       />
       <br />
       <canvas
