@@ -7,8 +7,8 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 
 import "./Editor.sass";
 
-import MuiAlert from '@material-ui/lab/Alert';
-function Alert(props) {
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+function Alert(props: AlertProps ) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
@@ -26,8 +26,8 @@ function GDGEditor() {
   const logoCanvas = useRef(null);
   const fullLogoImg = useRef(null)
   const [Scale, setScale] = useState(0.6);
-  const [Name, setName] = useState("City Name");
-  const [Mode, setMode] = useState(false);
+  const [Name, setName] = useState<string>("City Name");
+  const [Mode, setMode] = useState<boolean>(false);
   const [bwImageUrl, setbwImageUrl] = useState();
   const [colorImageUrl, setcolorImageUrl] = useState();
 
@@ -45,7 +45,7 @@ function GDGEditor() {
     });
   }, [])
 
-  const handleDarkMode = (mode) => {
+  const handleDarkMode = (mode:boolean) => {
     setMode(mode)
   };
 
@@ -146,13 +146,9 @@ function GDGEditor() {
         style={{
           width: "100%"
         }}
-        onChange={(e) => { setName(e.target.value) },
-          () => {
-            bwImage();
-            colorImage();
-          }
-
-        }
+        onChange={e =>{ 
+          setName(e.target.value) 
+        }}
       />
       <br />
       <canvas
