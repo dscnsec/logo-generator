@@ -7,29 +7,20 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 
 import "./Editor.sass";
 
-import MuiAlert from '@material-ui/lab/Alert';
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+
+
 
 
 function GDGEditor() {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      scale: 0.6,
-      name: "City Name",
-      darkMode: false
-    };
-  }*/
-  const GDGLogo = useRef(null);
-  const logoCanvas = useRef(null);
-  const fullLogoImg = useRef(null)
-  const [Scale, setScale] = useState(0.6);
-  const [Name, setName] = useState("City Name");
-  const [Mode, setMode] = useState(false);
-  const [bwImageUrl, setbwImageUrl] = useState();
-  const [colorImageUrl, setcolorImageUrl] = useState();
+  const GDGLogo = useRef<HTMLCanvasElement | any>(null);
+  const logoCanvas = useRef<HTMLCanvasElement | any>(null);
+  const fullLogoImg = useRef<HTMLCanvasElement | any>(null);
+  const [Scale, setScale] = useState<number>(0.6);
+  const [Name, setName] = useState<string>("City Name");
+  const [Mode, setMode] = useState<boolean>(false);
+  const [bwImageUrl, setbwImageUrl] = useState<any | null | undefined | string>();
+  const [colorImageUrl, setcolorImageUrl] = useState<any | null | string>();
 
   let LogoScale = 2.35;
 
@@ -43,9 +34,9 @@ function GDGEditor() {
         colorImage();
       }
     });
-  }, [])
+  })
 
-  const handleDarkMode = (mode) => {
+  const handleDarkMode = (mode: boolean) => {
     setMode(mode)
   };
 
@@ -146,13 +137,8 @@ function GDGEditor() {
         style={{
           width: "100%"
         }}
-        onChange={(e) => { setName(e.target.value) },
-          () => {
-            bwImage();
-            colorImage();
-          }
+        onChange={(event: any) => (setName(event.target.value))}
 
-        }
       />
       <br />
       <canvas
@@ -172,7 +158,7 @@ function GDGEditor() {
                 src={bwImageUrl}
                 style={{ maxWidth: "100%" }}
               />
-              <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
+              {/* <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>*/}
 
             </CardContent>
           </CardActionArea>
@@ -200,7 +186,7 @@ function GDGEditor() {
                   src={colorImageUrl}
                   style={{ maxWidth: "100%" }}
                 />
-                <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
+                {/*<Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert> */}
               </CardContent>
             </CardActionArea>
             <CardActions>
