@@ -7,7 +7,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GitHubButton from 'react-github-btn';
 
-function TabPanel(props) {
+interface Props{
+	props: any,
+	index:number,
+	mode:any
+}
+
+function TabPanel(props:any) {
 	const { children, value, index, ...other } = props;
 
 	return (
@@ -35,7 +41,7 @@ TabPanel.propTypes = {
 	value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
+function a11yProps(index:number) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
 		'aria-controls': `scrollable-auto-tabpanel-${index}`,
@@ -59,7 +65,7 @@ export default function ScrollableTabsButtonAuto() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 
-	const handleChange = (event, newValue) => {
+	const handleChange = (event:any, newValue:any) => {
 		setValue(newValue);
 	};
 

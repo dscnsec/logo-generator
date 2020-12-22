@@ -18,4 +18,4 @@ ReactDOM.render(
 	document.querySelector('#root'),
 );
 
-serviceWorker.register();
+serviceWorker.register(null);

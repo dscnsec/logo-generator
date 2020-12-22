@@ -9,7 +9,9 @@ import "./Editor.sass";
 
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
-
+function Alert(props: AlertProps ) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 function GDGEditor() {
@@ -36,7 +38,8 @@ function GDGEditor() {
     });
   })
 
-  const handleDarkMode = (mode: boolean) => {
+
+  const handleDarkMode = (mode:boolean) => {
     setMode(mode)
   };
 
@@ -138,7 +141,6 @@ function GDGEditor() {
           width: "100%"
         }}
         onChange={(event: any) => (setName(event.target.value))}
-
       />
       <br />
       <canvas
@@ -158,8 +160,7 @@ function GDGEditor() {
                 src={bwImageUrl}
                 style={{ maxWidth: "100%" }}
               />
-              {/* <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>*/}
-
+              <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is white. Please view downloaded logo against dark backgrounds.</Alert>
             </CardContent>
           </CardActionArea>
           <CardActions>
@@ -186,7 +187,7 @@ function GDGEditor() {
                   src={colorImageUrl}
                   style={{ maxWidth: "100%" }}
                 />
-                {/*<Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert> */}
+                <Alert severity="info" style={{ padding: "0 1rem", background: "#5c5c5c" }}>The text in the logo is black. Please view downloaded logo against light backgrounds.</Alert>
               </CardContent>
             </CardActionArea>
             <CardActions>
@@ -211,5 +212,6 @@ function GDGEditor() {
 const hidden = {
   display: "none"
 };
+
 
 export default GDGEditor;

@@ -8,7 +8,7 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 import "./Editor.sass";
 
 import MuiAlert from '@material-ui/lab/Alert';
-function Alert(props) {
+function Alert(props:any) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
@@ -23,8 +23,8 @@ function WTMEditor() {
   const wtmLogo = useRef(null);
   const logoCanvas = useRef(null);
   const fullLogoImg = useRef(null);
-  const [canvasScale, setScale] = useState(0.5);
-  const [cityName, setName] = useState("City Name");
+  const [canvasScale, setScale] = useState<number>(0.5);
+  const [cityName, setName] = useState<string>("City Name");
   const [fullLogoUrl, setFullLogoUrl] = useState();
   const [fullLogoUrlVertical, setFullLogoUrlVertical] = useState();
   const [fullLogoUrlOld, setFullLogoUrlOld] = useState();
@@ -33,18 +33,23 @@ function WTMEditor() {
   let logoScale= 2.35;
 
   useEffect(() => {
-    {
-      WebFont.load({
-        google: {
-          families: ["Roboto:400", "Product Sans", "Product Sans:400"]
-        },
-        fontactive: (familyName, fvd) => {
-          colorImage();
-          colorImageVertical();
-        }
-      });
-    }
-  });
+    
+    WebFont.load({
+          google: {
+            families: ["Roboto:400", "Product Sans", "Product Sans:400"]
+          },
+          fontactive: (familyName, fvd) => {
+            colorImage();
+            colorImageVertical();
+          }
+        });
+  },[]);
+
+  useEffect(() => {
+    colorImage();
+    colorImageVertical();
+ }, [cityName]);
+
   
   const colorImage=()=> {
     const name = cityName;
@@ -90,7 +95,7 @@ function WTMEditor() {
     logoScale = 0.5;
 
     const canvasWidth = (Math.max(ctx.measureText("Women Techmakers").width, ctx2.measureText(name).width) + 1500 );
-    const canvasHeight = wtmLogo.height * logoScale + 230;
+    const canvasHeight = wtmLogo.current.height * logoScale + 230;
 
     logoCanvas.current.setAttribute("width", canvasWidth * scale);
     logoCanvas.current.setAttribute("height", canvasHeight * scale);
@@ -105,7 +110,7 @@ function WTMEditor() {
     ctx.fillText(
       "Women Techmakers",
       canvasWidth/2 - (ctx.measureText("Women Techmakers").width / 2),
-      wtmLogo.height * logoScale + 150
+      wtmLogo.current.height * logoScale + 150
     );
 
     ctx.font = `400 42px "Product Sans"`;
@@ -142,12 +147,7 @@ function WTMEditor() {
               width: "100%"
           }}
           onChange={e => {
-            setName(e.target.value,
-              () => {
-                colorImage();
-                colorImageVertical();
-              }
-            );
+            setName(e.target.value)
           }}
         />
         <br />

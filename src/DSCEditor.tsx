@@ -1,14 +1,16 @@
-import React , {useState, useRef, useEffect} from "react";
+import React , {useState, useRef, useEffect, Props} from "react";
 import MainToolBar from './MainToolBar'
 
 import WebFont from "webfontloader";
 
-import { Button, Card, CardContent, CardActions, CardActionArea, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, CardActions, CardActionArea, TextField, ComponentsPropsList } from '@material-ui/core';
 
 import "./Editor.sass";
 
-import MuiAlert from '@material-ui/lab/Alert';
-function Alert(props) {
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+
+
+function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
@@ -16,8 +18,8 @@ const DSCEditor = function () {
   const dscLogo = useRef(null);
   const logoCanvas = useRef(null);
   const fullLogoImg = useRef(null)
-   const [canvasScale , setScale] = useState(0.5);
-   const [logoName, setName] = useState("School Name");
+   const [canvasScale , setScale] = useState<number>(0.5);
+   const [logoName, setName] = useState<string>("School Name");
    const [darkMode, setMode] = useState(false);
    const [fullLogoUrl, setFullLogoUrl] = useState();
    const [fullLogoUrlVertical, setFullLogoUrlVertical] = useState();
@@ -48,7 +50,8 @@ const DSCEditor = function () {
     colorImageVertical();
  }, [logoName]);
 
-const handleDarkMode = (mode) =>{
+
+const handleDarkMode = (mode:any) =>{
   setMode(mode);
 };
 
