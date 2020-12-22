@@ -43,7 +43,7 @@ function GDGEditor() {
         colorImage();
       }
     });
-  }, [])
+  })
 
   const handleDarkMode = (mode:boolean) => {
     setMode(mode)
