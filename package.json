@@ -15,6 +15,10 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.54",
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.14",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "clsx": "latest",
     "node-sass": "^4.14.1",
     "react": "latest",
@@ -22,6 +26,7 @@
     "react-github-btn": "^1.2.0",
     "react-responsive-canvas": "^1.0.2",
     "react-scripts": "latest",
+    "typescript": "^4.1.3",
     "webfontloader": "^1.6.28"
   },
   "browserslist": {
