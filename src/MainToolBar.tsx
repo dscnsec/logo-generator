@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function MainToolBar(props) {
+export default function MainToolBar(props:any) {
     const classes = useStyles();
 
     return (
