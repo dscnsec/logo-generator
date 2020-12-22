@@ -8,7 +8,7 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField, Comp
 import "./Editor.sass";
 
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import { Type } from "typescript";
+
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
