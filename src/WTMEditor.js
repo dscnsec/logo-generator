@@ -90,7 +90,7 @@ function WTMEditor() {
     logoScale = 0.5;
 
     const canvasWidth = (Math.max(ctx.measureText("Women Techmakers").width, ctx2.measureText(name).width) + 1500 );
-    const canvasHeight = wtmLogo.height * logoScale + 230;
+    const canvasHeight = wtmLogo.current.height * logoScale + 230;
 
     logoCanvas.current.setAttribute("width", canvasWidth * scale);
     logoCanvas.current.setAttribute("height", canvasHeight * scale);
@@ -105,7 +105,7 @@ function WTMEditor() {
     ctx.fillText(
       "Women Techmakers",
       canvasWidth/2 - (ctx.measureText("Women Techmakers").width / 2),
-      wtmLogo.height * logoScale + 150
+      wtmLogo.current.height * logoScale + 150
     );
 
     ctx.font = `400 42px "Product Sans"`;
