@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GDGEditor from './GDGEditor'
 import DSCEditor from './DSCEditor'
 import WTMEditor from './WTMEditor'
@@ -6,14 +6,17 @@ import { AppBar, BottomNavigation, Box, Container, Link, Tabs, Tab, Typography }
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GitHubButton from 'react-github-btn';
+import MCard from './logsign';
+import fire from './config/fire';
+import './App.css';
 
-interface Props{
+interface Props {
 	props: any,
-	index:number,
-	mode:any
+	index: number,
+	mode: any
 }
 
-function TabPanel(props:any) {
+function TabPanel(props: any) {
 	const { children, value, index, ...other } = props;
 
 	return (
@@ -41,7 +44,7 @@ TabPanel.propTypes = {
 	value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index:number) {
+function a11yProps(index: number) {
 	return {
 		id: `scrollable-auto-tab-${index}`,
 		'aria-controls': `scrollable-auto-tabpanel-${index}`,
@@ -64,9 +67,30 @@ const useStyles = makeStyles((theme) => ({
 export default function ScrollableTabsButtonAuto() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
+	const [user, setuser] = React.useState(false);
 
-	const handleChange = (event:any, newValue:any) => {
+
+	useEffect(() => {
+		fire.auth().onAuthStateChanged((user) => {
+			console.log(user);
+			if (user) {
+				setuser(true);
+			}
+			else {
+				setuser(false);
+			}
+		});
+	}, [])
+
+	const handleChange = (event: any, newValue: any) => {
 		setValue(newValue);
+	};
+
+	const Logout = () => {
+		if (user === true) {
+			console.log(Object.keys(user).length)
+			fire.auth().signOut();
+		}
 	};
 
 	return (
@@ -79,30 +103,29 @@ export default function ScrollableTabsButtonAuto() {
 					textColor="primary"
 					variant="scrollable"
 				>
-					<Tab label="GDG" {...a11yProps(0)} />
-					<Tab label="DSC" {...a11yProps(1)} />
-					<Tab label="WTM" {...a11yProps(2)} />
+					<Tab label="login/signup" {...a11yProps(0)} />
+					<Tab label="GDG" {...a11yProps(1)} hidden={!user} />
+					<Tab label="DSC" {...a11yProps(2)} hidden={!user} />
+					<Tab label="WTM" {...a11yProps(3)} hidden={!user} />
+					<button className="logb" onClick={Logout}>Log OUt</button>
 				</Tabs>
+
 			</AppBar>
-			<TabPanel value={value} index={0}>
-				<GDGEditor />
-			</TabPanel>
-			<TabPanel value={value} index={1}>
-				<DSCEditor />
-			</TabPanel>
-			<TabPanel value={value} index={2}>
-				<WTMEditor />
-			</TabPanel>
+			{!user ? <TabPanel value={value} index={0}><MCard /></TabPanel> :
+				<><TabPanel value={value} index={0}><MCard /></TabPanel>
+					<TabPanel value={value} index={1}><GDGEditor /></TabPanel>
+					<TabPanel value={value} index={2}><DSCEditor /></TabPanel>
+					<TabPanel value={value} index={3}><WTMEditor /></TabPanel></>}
 			<br></br>
 			<br></br>
 			<br></br>
 			<br></br>
 			<br></br>
 			<BottomNavigation className={classes.stickToBottom}>
-			<GitHubButton href="https://github.com/dscnsec/logo-generator" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star dscnsec/logo-generator on GitHub">Star</GitHubButton>
-				
+				<GitHubButton href="https://github.com/dscnsec/logo-generator" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star dscnsec/logo-generator on GitHub">Star</GitHubButton>
+
 				<Typography>
-				&nbsp;&middot;&nbsp;Created by&nbsp;
+					&nbsp;&middot;&nbsp;Created by&nbsp;
 					<Link href="https://xprilion.com" target="_blank">
 						@xprilion
 					</Link>
