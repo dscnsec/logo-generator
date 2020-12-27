@@ -1,0 +1,38 @@
+.m20{
+    margin-top: 20px;
+  }
+  .m10{
+    margin-top: 10px;
+  }
+  .m100r{
+    margin-top: 100px;
+    position: absolute;
+    left: 60%;
+  }
+  .m100l{
+    margin-top: 100px;
+    position: absolute;
+  }
+.p10{
+      padding-top: 10px;
+  }
+  input[type=email]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  input[type=password]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 0px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .bmar{
+      margin-left: 120px;
+  }
+  
