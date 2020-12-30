@@ -21,6 +21,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/webfontloader": "^1.6.32",
     "clsx": "latest",
+    "firebase": "^8.2.1",
     "node-sass": "^4.14.1",
     "react": "latest",
     "react-dom": "latest",
