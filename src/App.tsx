@@ -9,6 +9,7 @@ import GitHubButton from 'react-github-btn';
 import Button from '@material-ui/core/Button';
 import Login from './Login';
 import SignUp from './SignUp';
+import { AuthProvider } from './context/AuthContext'
 // import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
 
