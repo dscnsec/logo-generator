@@ -19,6 +19,7 @@
     "@types/node": "^14.14.14",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-router-dom": "^5.1.7",
     "@types/webfontloader": "^1.6.32",
     "clsx": "latest",
     "firebase": "^8.2.1",
@@ -27,6 +28,7 @@
     "react-dom": "latest",
     "react-github-btn": "^1.2.0",
     "react-responsive-canvas": "^1.0.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "latest",
     "typescript": "^4.1.3",
     "webfontloader": "^1.6.28"

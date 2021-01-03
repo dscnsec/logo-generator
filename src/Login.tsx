@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {Link as RouteLink, useHistory} from 'react-router-dom'
+import {useRef, useState} from 'react'
+import { useAuth } from './context/AuthContext'
 
 function Copyright() {
   return (
@@ -49,6 +52,30 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
   const classes = useStyles();
 
+  const [email, setEmail]= useState('')
+  const [password, setPassword]= useState('')
+  const { login }:any = useAuth()
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
+
+  async function handleSubmit(e:any) {
+    e.preventDefault()
+
+    try {
+      setError("")
+      setLoading(true)
+      await login(email, password)
+      history.push("/")
+    } catch(e) {
+      setError("Failed to log in")
+      console.log(e)
+    }
+
+    setLoading(false)
+    
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,7 +86,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +97,8 @@ export default function Login() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -81,6 +110,8 @@ export default function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -92,6 +123,7 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={loading}
           >
             Login
           </Button>
@@ -102,7 +134,8 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
+                
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

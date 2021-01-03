@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAuth } from './context/AuthContext';
+import {Link as RouteLink} from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -49,30 +50,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const firstNameRef= useRef();
-  const lastNameRef = useRef();
-  const emailRef = useRef<any>();
-  const passwordRef = useRef<any>();
-  const confirmPSasswordRef = useRef<any>();
-  const { signup, currentUser}:any = useAuth();
-  const [error, setError] = useState<string>("");
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword]= useState('')
+  const [confirmPassword, setConfirmPassword]= useState('')
+  const { signup }:any = useAuth();
+  const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e:any){
     e.preventDefault();
     
-    if(passwordRef.current.value !== confirmPSasswordRef.current.value){
+    if(password !== confirmPassword){
       return setError("Passwords do not match")
     }
     try {
       setError("")
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
-    } catch{
+      await signup(email, password)
+      console.log("account created");
+    } catch(e){
       setError("failed to create an account")
-      console.log(error);
+      console.log(e);
     }
-    
+    setLoading(false)
+    console.log(email)
   }
 
   return (
@@ -85,7 +88,6 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        {currentUser && currentUser.email}
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -98,7 +100,8 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                ref={firstNameRef}
+                value={firstName}
+                onChange={e=> setFirstName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -109,7 +112,8 @@ export default function SignUp() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                ref={lastNameRef}
+                value={lastName}
+                onChange={e=> setLastName(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -121,7 +125,8 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 type="email"
-                ref={emailRef}
+                value={email}
+                onChange={e=> setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -133,7 +138,8 @@ export default function SignUp() {
                 label="Password"
                 type="password"
                 id="password"
-                ref={passwordRef}
+                value={password}
+                onChange={e=> setPassword(e.target.value)}
               />
               </Grid>
             <Grid item xs={12}>
@@ -146,7 +152,8 @@ export default function SignUp() {
                 type="Password"
                 id="Confirm Password"
                 autoComplete="current-password"
-                ref={confirmPSasswordRef}
+                value={confirmPassword}
+                onChange={e=> setConfirmPassword(e.target.value)}
               />
             </Grid>
             {/* 
@@ -170,7 +177,9 @@ export default function SignUp() {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
+                <RouteLink to="/login">
                 Already have an account? Sign in
+                </RouteLink>
               </Link>
             </Grid>
           </Grid>
@@ -181,4 +190,5 @@ export default function SignUp() {
       </Box>
     </Container>
   );
+  
 }
