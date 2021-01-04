@@ -16,6 +16,7 @@ import {Link as RouteLink, useHistory} from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
+import { signInWithGoogle } from './firebase';
 
 function Copyright() {
   return (
@@ -46,8 +47,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 1),
   },
+  submitGoogle:{
+     margin: theme.spacing(1,0,1)
+  }
 }));
 
 interface stateProps{
@@ -80,6 +84,26 @@ export default function Login(props:stateProps) {
 
     setLoading(false)
     
+  }
+
+  async function handleGoogleSignIn(e:any){
+    e.preventDefault();
+    
+    try {
+      setError("")
+      // setLoading(true)
+      signInWithGoogle()
+      console.log("account created")
+      
+      
+    }catch(e){
+      setError("failed to create an account")
+      console.log(e);
+    }
+    setLoading(false)
+    console.log(email)
+    // history.push("/")
+    props.loginOpen(false)
   }
 
   return (
@@ -134,6 +158,17 @@ export default function Login(props:stateProps) {
           >
             Login
           </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submitGoogle}
+            disabled={loading}
+            onClick={handleGoogleSignIn}
+          >
+            Continue with google
+          </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -141,7 +176,7 @@ export default function Login(props:stateProps) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="" variant="body2" onClick={(e:any)=> props.loginOpen(true)}>
+              <Link href="#" variant="body2" onClick={(e:any)=> props.loginOpen(false,true)}>
                 
                 {"Don't have an account? Sign Up"}
               </Link>

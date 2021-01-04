@@ -9,6 +9,8 @@ import "./Editor.sass";
 
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
+import { useAuth } from './context/AuthContext';
+
 function Alert(props: AlertProps ) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -23,6 +25,9 @@ function GDGEditor() {
   const [Mode, setMode] = useState<boolean>(false);
   const [bwImageUrl, setbwImageUrl] = useState<any | null | undefined | string>();
   const [colorImageUrl, setcolorImageUrl] = useState<any | null | string>();
+  const { currentUser }:any = useAuth();
+  const [error, setError] = useState('');
+  
 
   let LogoScale = 2.35;
 
@@ -36,7 +41,7 @@ function GDGEditor() {
         colorImage();
       }
     });
-  })
+  },[Name])
 
 
   const handleDarkMode = (mode:boolean) => {
@@ -164,15 +169,28 @@ function GDGEditor() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              href={bwImageUrl}
-              style={{ margin: "5px" }}
-              download={`GDG ${Name} Dark Horizontal-Logo.png`}
-            >
-              DOWNLOAD
-              </Button>
+          { currentUser ? 
+                <Button
+                 variant="contained"
+                 color="primary"
+                 href={bwImageUrl}
+                 style={{ margin: "5px" }}
+                 download={`GDG ${Name} Dark Horizontal-Logo.png`}
+                >
+                 DOWNLOAD
+                </Button> :
+                
+                <Button
+                  variant="contained"
+                  color="primary"
+                  href={bwImageUrl}
+                  style={{ margin: "5px" }}
+                  onClick={(e:any) => setError('Login to download the logo')}
+                >
+                  DOWNLOAD
+                </Button>
+          }              
+                {error && <Alert severity="error" variant="outlined">{error}</Alert>}
           </CardActions>
         </Card>
       ) : (
@@ -191,15 +209,30 @@ function GDGEditor() {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button
-                variant="contained"
-                color="primary"
-                href={colorImageUrl}
-                style={{ margin: "5px" }}
-                download={`GDG ${Name} Light Horizontal-Logo.png`}
-              >
-                DOWNLOAD
+              { currentUser ? 
+                <Button
+                 variant="contained"
+                 color="primary"
+                 href={colorImageUrl}
+                 style={{ margin: "5px" }}
+                 download={`GDG ${Name} Light Horizontal-Logo.png`}
+                >
+                 DOWNLOAD
+                </Button> :
+                
+                <Button
+                  variant="contained"
+                  color="primary"
+                  href={colorImageUrl}
+                  style={{ margin: "5px" }}
+                  onClick={(e:any) => setError('Login to download the logo')}
+                >
+                  DOWNLOAD
                 </Button>
+              }              
+                {error && <Alert severity="error" variant="outlined">{error}</Alert>}
+
+                             
             </CardActions>
 
           </Card>

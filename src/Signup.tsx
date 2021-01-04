@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface stateProps{
-  signupCheck:any
+  signupOpen:Function
 }
 
-export default function SignUp(props:stateProps) {
+export default function Signup(props:stateProps) {
   const classes = useStyles();
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -81,7 +81,7 @@ export default function SignUp(props:stateProps) {
       await signup(email, password)
       console.log("account created")
       history.push("/")
-      props.signupCheck(false)
+      props.signupOpen(false)
     } catch(e){
       setError("failed to create an account")
       console.log(e);
@@ -95,7 +95,7 @@ export default function SignUp(props:stateProps) {
     
     try {
       setError("")
-      setLoading(true)
+      // setLoading(true)
       signInWithGoogle()
       console.log("account created")
       
@@ -107,7 +107,7 @@ export default function SignUp(props:stateProps) {
     setLoading(false)
     console.log(email)
     // history.push("/")
-    // props.signupCheck(false)
+    props.signupOpen(false)
   }
 
   return (
@@ -215,10 +215,8 @@ export default function SignUp(props:stateProps) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                <RouteLink to="/login">
+              <Link href="#" variant="body2" onClick={(e:any)=> props.signupOpen(false,true)}>
                 Already have an account? Sign in
-                </RouteLink>
               </Link>
             </Grid>
           </Grid>

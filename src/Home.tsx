@@ -11,6 +11,10 @@ import Login from './Login';
 import SignUp from './SignUp';
 import { useAuth } from './context/AuthContext';
 import {useHistory} from 'react-router-dom';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 // import { AuthProvider } from './context/AuthContext'
 // import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
@@ -116,14 +120,24 @@ export default function ScrollableTabsButtonAuto() {
 	const { currentUser, logout }:any= useAuth();
 	const [error, setError] = React.useState('');
 	const history = useHistory();
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
 
 	const handleChange = (event:any, newValue:any) => {
 		setValue(newValue);
 	};
 
+	const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	  };
+
+	  const handleMenuClose = () => {
+		setAnchorEl(null);
+	  };
+
 	async function handleLogout(){
 		setError("")
+		setAnchorEl(null)
 
 		try{
 			await logout();
@@ -143,13 +157,15 @@ export default function ScrollableTabsButtonAuto() {
 
 	const LoginBody = (
 		<div style={modalStyle} className={classes.paper}>
-		  <Login loginOpen={(value:boolean)=> setOpenLogin(value)}/>
+		  <Login loginOpen={(value1:boolean, value2:boolean)=> {setOpenLogin(value1)
+		   setOpenSignUp(value2)} }/>
 		</div>
 	);
 
 	const signUpBody = (
 		<div style={modalStyle} className={classes.paper}>
-		  <SignUp signupCheck={(value:boolean)=> setOpenSignUp(value)}/>
+		  <SignUp signupOpen={(value1:boolean, value2:boolean)=> {setOpenSignUp(value1)
+		   setOpenLogin(value2)}}/>
 	    </div>
 	);
 	
@@ -176,24 +192,39 @@ export default function ScrollableTabsButtonAuto() {
                         Logo-Generator
                     </Typography>
 	
-				    {currentUser ? <Button onClick={handleLogout}>Logout</Button> :
-					   <>
-                           <Button color="inherit" onClick={handleOpen}>Login</Button>
-					        <Modal
-                              open={openLogin}
-                              onClose={handleClose}
-                            >
-                              {LoginBody}
-                            </Modal>
+				    {currentUser ?  <>
+					                 <Button onClick={handleMenuClick}>{currentUser.displayName}
+                                      <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
+                                     </Button>
+									  <Menu
+                                        id="simple-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleMenuClose}
+                                      >
+                                       <MenuItem onClick={handleMenuClose}>My Logos</MenuItem>
+                                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                       </Menu>
+									</> 
+							     : 
+					                <>
+                                      <Button color="inherit" onClick={handleOpen}>Login</Button>
+					                    <Modal
+                                         open={openLogin}
+                                          onClose={handleClose}
+                                        >
+                                          {LoginBody}
+                                        </Modal>
 
-				            <Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
-				            <Modal
-                              open={openSignUp}
-                              onClose={() => setOpenSignUp(false)}
-                            >
-                              {signUpBody}
-                            </Modal>
-					    </>
+				                       <Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
+				                        <Modal
+                                         open={openSignUp}
+                                         onClose={() => setOpenSignUp(false)}
+                                        >
+                                         {signUpBody}
+                                        </Modal>
+					                </>
                     } 
                 </Toolbar>
 

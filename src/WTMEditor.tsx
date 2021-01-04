@@ -8,27 +8,23 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField } fro
 import "./Editor.sass";
 
 import MuiAlert from '@material-ui/lab/Alert';
+import { useAuth } from './context/AuthContext';
+
 function Alert(props:any) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 function WTMEditor() {
 
-  // constructor(props) {
-  //   super(props);
-  //   state = {
-  //     scale: 0.5,
-  //     name: "City Name",
-  //   };
   const wtmLogo = useRef(null);
   const logoCanvas = useRef(null);
   const fullLogoImg = useRef(null);
   const [canvasScale, setScale] = useState<number>(0.5);
   const [cityName, setName] = useState<string>("City Name");
-  const [fullLogoUrl, setFullLogoUrl] = useState();
-  const [fullLogoUrlVertical, setFullLogoUrlVertical] = useState();
   const [fullLogoUrlOld, setFullLogoUrlOld] = useState();
   const [fullLogoUrlVerticalOld, setFullLogoUrlVerticalOld] = useState();
+  const { currentUser }: any= useAuth();
+  const [error, setError] = useState('');
 
   let logoScale= 2.35;
 
@@ -117,9 +113,6 @@ function WTMEditor() {
     ctx.textBaseline = "bottom";
     ctx.fillText(name, canvasWidth/2 - (ctx.measureText(name).width / 2), wtmLogo.current.height * logoScale + 215);
 
-    // setState({
-    //   fullLogoUrlVerticalOld: logoCanvas.toDataURL()
-    // });
     setFullLogoUrlVerticalOld(logoCanvas.current.toDataURL());
   }
 
@@ -168,15 +161,28 @@ function WTMEditor() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              href={fullLogoUrlOld}
-              style={{ margin: "5px" }}
-              download={`WTM ${name} Light Horizontal-Logo.png`}
-            >
-              DOWNLOAD
-            </Button>
+          { currentUser ? 
+              <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrlOld}
+                style={{ margin: "5px" }}
+                download={`WTM ${name} Light Horizontal-Logo.png`}
+              >
+                DOWNLOAD
+              </Button> :
+                
+                <Button
+                  variant="contained"
+                  color="primary"
+                  href={fullLogoUrlOld}
+                  style={{ margin: "5px" }}
+                  onClick={(e:any) => setError('Login to download the logo')}
+                >
+                  DOWNLOAD
+                </Button>
+          }              
+                {error && <Alert severity="error" variant="outlined">{error}</Alert>}
           </CardActions>
         </Card>
         <Card style={{width: "100%", marginTop: "1rem"}}>
@@ -192,15 +198,28 @@ function WTMEditor() {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button
-              variant="contained"
-              color="primary"
-              href={fullLogoUrlVerticalOld}
-              style={{ margin: "5px" }}
-              download={`WTM ${name} Light Vertical-Logo.png`}
-            >
-              DOWNLOAD
-            </Button>
+          { currentUser ? 
+              <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrlVerticalOld}
+                style={{ margin: "5px" }}
+                download={`WTM ${name} Light Vertical-Logo.png`}
+              >
+                DOWNLOAD
+              </Button> :
+                
+                <Button
+                  variant="contained"
+                  color="primary"
+                  href={fullLogoUrlVerticalOld}
+                  style={{ margin: "5px" }}
+                  onClick={(e:any) => setError('Login to download the logo')}
+                >
+                  DOWNLOAD
+                </Button>
+          }              
+                {error && <Alert severity="error" variant="outlined">{error}</Alert>}
           </CardActions>
         </Card>
 
