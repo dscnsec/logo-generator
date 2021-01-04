@@ -93,17 +93,14 @@ export default function SignUp(props:stateProps) {
   async function handleGoogleSignIn(e:any){
     e.preventDefault();
     
-    // if(password !== confirmPassword){
-    //   return setError("Passwords do not match")
-    // }
     try {
       setError("")
       setLoading(true)
-       signInWithGoogle()
+      signInWithGoogle()
       console.log("account created")
       
       
-    } catch(e){
+    }catch(e){
       setError("failed to create an account")
       console.log(e);
     }
@@ -192,14 +189,6 @@ export default function SignUp(props:stateProps) {
                 onChange={e=> setConfirmPassword(e.target.value)}
               />
             </Grid>
-            {/* 
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid> */}
-            
           </Grid>
           
           <Button

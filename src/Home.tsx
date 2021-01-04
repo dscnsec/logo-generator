@@ -135,23 +135,23 @@ export default function ScrollableTabsButtonAuto() {
 
 	const handleOpen = () => {
 		setOpenLogin(true);
-	  };
+	};
 	
-	  const handleClose = () => {
+	const handleClose = () => {
 		setOpenLogin(false);
-	  };
+	};
 
-	  const LoginBody = (
+	const LoginBody = (
 		<div style={modalStyle} className={classes.paper}>
-		  <Login loginDone={(value:boolean)=> setOpenLogin(value)}/>
+		  <Login loginOpen={(value:boolean)=> setOpenLogin(value)}/>
 		</div>
-	  );
+	);
 
-	  const signUpBody = (
+	const signUpBody = (
 		<div style={modalStyle} className={classes.paper}>
 		  <SignUp signupCheck={(value:boolean)=> setOpenSignUp(value)}/>
 	    </div>
-	  );
+	);
 	
 
 	return (
@@ -173,26 +173,26 @@ export default function ScrollableTabsButtonAuto() {
 			<AppBar position="static" color="default">
 			    <Toolbar variant="dense">
                     <Typography variant="h6" className={classes.title}>
-                           Logo-Generator
+                        Logo-Generator
                     </Typography>
 	
 				    {currentUser ? <Button onClick={handleLogout}>Logout</Button> :
 					   <>
                            <Button color="inherit" onClick={handleOpen}>Login</Button>
-					       <Modal
-                           open={openLogin}
-                           onClose={handleClose}
-                           >
-                           {LoginBody}
-                           </Modal>
+					        <Modal
+                              open={openLogin}
+                              onClose={handleClose}
+                            >
+                              {LoginBody}
+                            </Modal>
 
-				           <Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
-				           <Modal
-                           open={openSignUp}
-                            onClose={() => setOpenSignUp(false)}
-                           >
-                            {signUpBody}
-                           </Modal>
+				            <Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
+				            <Modal
+                              open={openSignUp}
+                              onClose={() => setOpenSignUp(false)}
+                            >
+                              {signUpBody}
+                            </Modal>
 					    </>
                     } 
                 </Toolbar>

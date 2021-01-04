@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Link as RouteLink, useHistory} from 'react-router-dom';
-import {useRef, useState} from 'react';
+import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
 
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface stateProps{
-  loginDone:any
+  loginOpen:Function
 }
 
 export default function Login(props:stateProps) {
@@ -72,7 +72,7 @@ export default function Login(props:stateProps) {
       setLoading(true)
       await login(email, password)
       history.push("/")
-      props.loginDone(false)
+      props.loginOpen(false)
     } catch(e) {
       setError(e.message)
       console.log(e)
@@ -141,7 +141,7 @@ export default function Login(props:stateProps) {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="" variant="body2" onClick={(e:any)=> props.loginDone(true)}>
+              <Link href="" variant="body2" onClick={(e:any)=> props.loginOpen(true)}>
                 
                 {"Don't have an account? Sign Up"}
               </Link>
