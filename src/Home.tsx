@@ -9,6 +9,8 @@ import GitHubButton from 'react-github-btn';
 import Button from '@material-ui/core/Button';
 import Login from './Login';
 import SignUp from './SignUp';
+import { useAuth } from './context/AuthContext';
+import {useHistory} from 'react-router-dom';
 // import { AuthProvider } from './context/AuthContext'
 // import IconButton from '@material-ui/core/IconButton';
 // import MenuIcon from '@material-ui/icons/Menu';
@@ -104,17 +106,32 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 export default function ScrollableTabsButtonAuto() {
 	const classes = useStyles();
 	const [value, setValue] = React.useState(0);
 	const [modalStyle] = React.useState(getModalStyle);
 	const [openLogin, setOpenLogin] = React.useState(false);
 	const [openSignUp, setOpenSignUp] = React.useState(false);
+	const { currentUser, logout }:any= useAuth();
+	const [error, setError] = React.useState('');
+	const history = useHistory();
 
 
 	const handleChange = (event:any, newValue:any) => {
 		setValue(newValue);
 	};
+
+	async function handleLogout(){
+		setError("")
+
+		try{
+			await logout();
+			history.push('/')
+		}catch {
+			setError('Failed to log out')
+		}
+	}
 
 	const handleOpen = () => {
 		setOpenLogin(true);
@@ -126,13 +143,13 @@ export default function ScrollableTabsButtonAuto() {
 
 	  const LoginBody = (
 		<div style={modalStyle} className={classes.paper}>
-		  <Login />
+		  <Login loginDone={(value:boolean)=> setOpenLogin(value)}/>
 		</div>
 	  );
 
 	  const signUpBody = (
 		<div style={modalStyle} className={classes.paper}>
-		  <SignUp />
+		  <SignUp signupCheck={(value:boolean)=> setOpenSignUp(value)}/>
 	    </div>
 	  );
 	
@@ -154,28 +171,30 @@ export default function ScrollableTabsButtonAuto() {
             </AppBar> */}
 
 			<AppBar position="static" color="default">
-			<Toolbar variant="dense">
+			    <Toolbar variant="dense">
                     <Typography variant="h6" className={classes.title}>
-                         Logo-Generator
+                           Logo-Generator
                     </Typography>
-                    <Button color="inherit" onClick={handleOpen}>Login</Button>
-					   <Modal
-                        open={openLogin}
-                        onClose={handleClose}
-                        >
-                         {LoginBody}
-                       </Modal>
+	
+				    {currentUser ? <Button onClick={handleLogout}>Logout</Button> :
+					   <>
+                           <Button color="inherit" onClick={handleOpen}>Login</Button>
+					       <Modal
+                           open={openLogin}
+                           onClose={handleClose}
+                           >
+                           {LoginBody}
+                           </Modal>
 
-					<Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
-					<Modal
-                        open={openSignUp}
-                        onClose={() => setOpenSignUp(false)}
-                        >
-                         {signUpBody}
-                       </Modal>
-                       
-
-
+				           <Button color="inherit" onClick={() => setOpenSignUp(true)}>SignUp</Button>
+				           <Modal
+                           open={openSignUp}
+                            onClose={() => setOpenSignUp(false)}
+                           >
+                            {signUpBody}
+                           </Modal>
+					    </>
+                    } 
                 </Toolbar>
 
 				<Tabs

@@ -13,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAuth } from './context/AuthContext';
-import {Link as RouteLink} from 'react-router-dom'
+import {Link as RouteLink, useHistory} from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+import { signInWithGoogle } from './firebase';
 
 function Copyright() {
   return (
@@ -30,7 +32,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(5),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -44,20 +46,28 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(1, 0, 1),
   },
+  submitGoogle: {
+    margin: theme.spacing(0,0,2)
+  }
 }));
 
-export default function SignUp() {
+interface stateProps{
+  signupCheck:any
+}
+
+export default function SignUp(props:stateProps) {
   const classes = useStyles();
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword]= useState('')
   const [confirmPassword, setConfirmPassword]= useState('')
-  const { signup }:any = useAuth();
-  const [error, setError] = useState<string>('');
-  const [loading, setLoading] = useState(false);
+  const { signup }:any = useAuth()
+  const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState(false)
+  const history = useHistory()
 
   async function handleSubmit(e:any){
     e.preventDefault();
@@ -69,13 +79,38 @@ export default function SignUp() {
       setError("")
       setLoading(true)
       await signup(email, password)
-      console.log("account created");
+      console.log("account created")
+      history.push("/")
+      props.signupCheck(false)
     } catch(e){
       setError("failed to create an account")
       console.log(e);
     }
     setLoading(false)
     console.log(email)
+  }
+
+  async function handleGoogleSignIn(e:any){
+    e.preventDefault();
+    
+    // if(password !== confirmPassword){
+    //   return setError("Passwords do not match")
+    // }
+    try {
+      setError("")
+      setLoading(true)
+       signInWithGoogle()
+      console.log("account created")
+      
+      
+    } catch(e){
+      setError("failed to create an account")
+      console.log(e);
+    }
+    setLoading(false)
+    console.log(email)
+    // history.push("/")
+    // props.signupCheck(false)
   }
 
   return (
@@ -88,6 +123,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {error && <Alert severity="error">{error}</Alert> }
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -163,7 +199,9 @@ export default function SignUp() {
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid> */}
+            
           </Grid>
+          
           <Button
             type="submit"
             fullWidth
@@ -173,6 +211,18 @@ export default function SignUp() {
             disabled={loading}
           >
             Sign Up
+          </Button>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submitGoogle}
+            disabled={loading}
+            onClick={handleGoogleSignIn}
+          >
+            Sign Up with google
           </Button>
           <Grid container justify="flex-end">
             <Grid item>

@@ -12,9 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link as RouteLink, useHistory} from 'react-router-dom'
-import {useRef, useState} from 'react'
-import { useAuth } from './context/AuthContext'
+import {Link as RouteLink, useHistory} from 'react-router-dom';
+import {useRef, useState} from 'react';
+import { useAuth } from './context/AuthContext';
+import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
   return (
@@ -49,7 +50,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+interface stateProps{
+  loginDone:any
+}
+
+export default function Login(props:stateProps) {
   const classes = useStyles();
 
   const [email, setEmail]= useState('')
@@ -67,8 +72,9 @@ export default function Login() {
       setLoading(true)
       await login(email, password)
       history.push("/")
+      props.loginDone(false)
     } catch(e) {
-      setError("Failed to log in")
+      setError(e.message)
       console.log(e)
     }
 
@@ -86,6 +92,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
+        {error && <Alert severity="error">{error}</Alert> }
         <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -134,7 +141,7 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link href="" variant="body2" onClick={(e:any)=> props.loginDone(true)}>
                 
                 {"Don't have an account? Sign Up"}
               </Link>
