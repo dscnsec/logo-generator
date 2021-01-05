@@ -47,6 +47,11 @@ const DSCEditor = function () {
   },[]);
 
   useEffect(() => {
+    
+    setError('')
+  }, [currentUser])
+
+  useEffect(() => {
     bwImageHorizontal();
     colorImage();
     bwImageVertical();

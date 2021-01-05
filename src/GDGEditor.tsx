@@ -41,7 +41,12 @@ function GDGEditor() {
         colorImage();
       }
     });
-  },[Name])
+  },[])
+
+  useEffect(() => {
+    
+    setError('')
+  }, [currentUser])
 
 
   const handleDarkMode = (mode:boolean) => {

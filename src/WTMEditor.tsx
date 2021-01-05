@@ -42,6 +42,12 @@ function WTMEditor() {
   },[]);
 
   useEffect(() => {
+    
+    setError('')
+  }, [currentUser])
+  
+
+  useEffect(() => {
     colorImage();
     colorImageVertical();
  }, [cityName]);
