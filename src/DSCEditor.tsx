@@ -8,6 +8,7 @@ import { Button, Card, CardContent, CardActions, CardActionArea, TextField, Comp
 import "./Editor.sass";
 
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import { useAuth } from './context/AuthContext';
 
 
 function Alert(props: AlertProps) {
@@ -25,6 +26,8 @@ const DSCEditor = function () {
    const [fullLogoUrlVertical, setFullLogoUrlVertical] = useState();
    const [fullLogoUrlOld, setFullLogoUrlOld] = useState();
    const [fullLogoUrlVerticalOld, setFullLogoUrlVerticalOld] = useState();
+   const { currentUser }: any= useAuth();
+   const [error, setError] = useState('');
 
   let LogoScale = 2.35;
 
@@ -42,6 +45,11 @@ const DSCEditor = function () {
           }
         });
   },[]);
+
+  useEffect(() => {
+    
+    setError('')
+  }, [currentUser])
 
   useEffect(() => {
     bwImageHorizontal();
@@ -250,6 +258,7 @@ const colorImageVertical=()=> {
                 </CardContent>
               </CardActionArea>
               <CardActions>
+              { currentUser ?
                 <Button
                   variant="contained"
                   color="primary"
@@ -258,7 +267,18 @@ const colorImageVertical=()=> {
                   download={`DSC ${logoName} Dark Horizontal-Logo.png`}
                 >
                   DOWNLOAD
+                </Button> :
+                <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrl}
+                style={{ margin: "5px" }}
+                onClick={(e) => setError('Login to download the logo')}
+                >
+                DOWNLOAD
                 </Button>
+              } 
+              {error && <Alert severity="error" variant="outlined">{error}</Alert>}
               </CardActions>
             </Card>
             <Card style={{width: "100%", marginTop: "1rem"}}>
@@ -274,6 +294,7 @@ const colorImageVertical=()=> {
                 </CardContent>
               </CardActionArea>
               <CardActions>
+              { currentUser ?
                 <Button
                   variant="contained"
                   color="primary"
@@ -282,7 +303,18 @@ const colorImageVertical=()=> {
                   download={`DSC ${logoName} Dark Vertical-Logo.png`}
                 >
                   DOWNLOAD
+                </Button> :
+                <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrlVertical}
+                style={{ margin: "5px" }}
+                onClick={(e) => setError('Login to download the logo')}
+                >
+                DOWNLOAD
                 </Button>
+              } 
+              {error && <Alert severity="error" variant="outlined">{error}</Alert>}
               </CardActions>
             </Card>
           </>
@@ -301,6 +333,7 @@ const colorImageVertical=()=> {
                 </CardContent>
               </CardActionArea>
               <CardActions>
+              { currentUser ?
                 <Button
                   variant="contained"
                   color="primary"
@@ -309,7 +342,18 @@ const colorImageVertical=()=> {
                   download={`DSC ${logoName} Light Horizontal-Logo.png`}
                 >
                   DOWNLOAD
+                </Button> :
+                <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrlVerticalOld}
+                style={{ margin: "5px" }}
+                onClick={(e) => setError('Login to download')}
+                >
+                DOWNLOAD
                 </Button>
+              } 
+              {error && <Alert severity="error" variant="outlined">{error}</Alert>}
               </CardActions>
             </Card>
             <Card style={{width: "100%", marginTop: "1rem"}}>
@@ -325,6 +369,7 @@ const colorImageVertical=()=> {
                 </CardContent>
               </CardActionArea>
               <CardActions>
+              { currentUser ?
                 <Button
                   variant="contained"
                   color="primary"
@@ -333,7 +378,18 @@ const colorImageVertical=()=> {
                   download={`DSC ${logoName} Light Vertical-Logo.png`}
                 >
                   DOWNLOAD
+                </Button> :
+                <Button
+                variant="contained"
+                color="primary"
+                href={fullLogoUrlVerticalOld}
+                style={{ margin: "5px" }}
+                onClick={(e) => setError('Login to download')}
+                >
+                DOWNLOAD
                 </Button>
+              } 
+              {error && <Alert severity="error" variant="outlined">{error}</Alert>}
               </CardActions>
             </Card>
           </>
