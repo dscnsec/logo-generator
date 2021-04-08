@@ -236,7 +236,7 @@ export default function ScrollableTabsButtonAuto() {
 					variant="scrollable"
 				>
 					<Tab label="GDG" {...a11yProps(0)} />
-					<Tab label="DSC" {...a11yProps(1)} />
+					<Tab label="GDSC" {...a11yProps(1)} />
 					<Tab label="WTM" {...a11yProps(2)} />
 				</Tabs>
 			</AppBar>
