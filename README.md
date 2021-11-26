@@ -22,5 +22,5 @@ A logo generator for all and any communities!
 
 # Possible Mentors: 
 
-- Ayush [Contact me](ayush@dscnsec.com)
-- Piyush [Contact me](lead@dscnsec.com)
+- Ayush (ayush@dscnsec.com)
+- Piyush (lead@dscnsec.com)
