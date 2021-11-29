@@ -41,7 +41,7 @@ function GDGEditor() {
         colorImage();
       }
     });
-  },[])
+  },[Name])
 
   useEffect(() => {
     
