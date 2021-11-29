@@ -30,3 +30,5 @@ A logo generator for all and any communities!
 
 - Ayush (ayush@dscnsec.com)
 - Piyush (lead@dscnsec.com)
+
+For further doubts you can join [Logo Generator Queries discord server](https://discord.gg/NkMmFb8Vss).
