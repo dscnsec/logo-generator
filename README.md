@@ -23,7 +23,7 @@ A logo generator for all and any communities!
 
 ## Tech Stacks
 
-- **Front End** - HTML Canvas, CSS, javaScript/typeScript, react
+- **Front End** - HTML Canvas, CSS, JavaScript/TypeScript, React
 - **Back End** - Firebase
 
 # Possible Mentors: 
