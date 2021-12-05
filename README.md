@@ -30,5 +30,6 @@ A logo generator for all and any communities!
 
 - Ayush (ayush@dscnsec.com)
 - Piyush (lead@dscnsec.com)
+- [Tausif Siddqui](https://www.linkedin.com/in/md-tausif-siddiqui-2560b31a6)
 
 For further doubts you can join [Logo Generator Queries discord server](https://discord.gg/NkMmFb8Vss).
