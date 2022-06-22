@@ -10,6 +10,8 @@ import "./Editor.sass";
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { useAuth } from './context/AuthContext';
 
+const text = "Google Developer Student Clubs"
+
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -70,7 +72,7 @@ const bwImageHorizontal =()=> {
   ctx.font = `400 96px "Product Sans"`;
   LogoScale = 1.36;
 
-  const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
+  const canvasWidth = Math.max(ctx.measureText(text).width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
   const canvasHeight = dscLogo.current.height + 150;
 
   logoCanvas.current.setAttribute("width", canvasWidth * scale);
@@ -82,7 +84,7 @@ const bwImageHorizontal =()=> {
 
   ctx.drawImage(dscLogo.current, 20, 0, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
 
-  ctx.fillText("Developer Student Clubs", dscLogo.current.width + 112, 132);
+  ctx.fillText(text, dscLogo.current.width + 112, 132);
 
   ctx.font = `400 66px "Product Sans"`;
   ctx.fillText(name, dscLogo.current.width + 112, 243);
@@ -100,7 +102,7 @@ const bwImageVertical =()=>{
 
   LogoScale = 2.35;
 
-  const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
+  const canvasWidth = (Math.max(ctx.measureText(text).width, ctx2.measureText(name).width) + 1200 );
   const canvasHeight = dscLogo.current.height * LogoScale + 100;
 
   logoCanvas.current.setAttribute("width", canvasWidth * scale);
@@ -115,8 +117,8 @@ const bwImageVertical =()=>{
   ctx.textBaseline = "bottom";
   // ctx.textAlign = "center";
   ctx.fillText(
-    "Developer Student Clubs",
-    canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
+    text,
+    canvasWidth/2 - (ctx.measureText(text).width / 2),
     dscLogo.current.height * LogoScale + 10
   );
 
@@ -138,7 +140,7 @@ const colorImage =()=>{
 
   LogoScale = 1.36;
 
-  const canvasWidth = Math.max(ctx.measureText("Developer Student Clubs").width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
+  const canvasWidth = Math.max(ctx.measureText(text).width, ctx.measureText(name).width) + dscLogo.current.width * LogoScale + 600;
   const canvasHeight = dscLogo.current.height + 150;
 
   logoCanvas.current.setAttribute("width", canvasWidth * scale);
@@ -150,7 +152,7 @@ const colorImage =()=>{
 
   ctx.drawImage(dscLogo.current, 20, 0, dscLogo.current.width * LogoScale, dscLogo.current.height* LogoScale);
 
-  ctx.fillText("Developer Student Clubs", dscLogo.current.width + 112, 132);
+  ctx.fillText(text, dscLogo.current.width + 112, 132);
 
   ctx.font = `400 66px "Product Sans"`;
   ctx.fillText(name, dscLogo.current.width + 112, 243);
@@ -168,7 +170,7 @@ const colorImageVertical=()=> {
 
   LogoScale = 2.35;
 
-  const canvasWidth = (Math.max(ctx.measureText("Developer Student Clubs").width, ctx2.measureText(name).width) + 1200 );
+  const canvasWidth = (Math.max(ctx.measureText(text).width, ctx2.measureText(name).width) + 1200 );
   const canvasHeight = dscLogo.current.height * LogoScale + 100;
 
   logoCanvas.current.setAttribute("width", canvasWidth * scale);
@@ -183,8 +185,8 @@ const colorImageVertical=()=> {
   ctx.textBaseline = "bottom";
   // ctx.textAlign = "center";
   ctx.fillText(
-    "Developer Student Clubs",
-    canvasWidth/2 - (ctx.measureText("Developer Student Clubs").width / 2),
+    "text",
+    canvasWidth/2 - (ctx.measureText(text).width / 2),
     dscLogo.current.height * LogoScale + 10
   );
 
