@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useAuth } from './context/AuthContext';
-import {Link as RouteLink, useHistory} from 'react-router-dom';
+import {Link as RouteLink, useNavigate} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import { signInWithGoogle } from './firebase';
 
@@ -67,7 +67,7 @@ export default function Signup(props:stateProps) {
   const { signup }:any = useAuth()
   const [error, setError] = useState<string>('')
   const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   async function handleSubmit(e:any){
     e.preventDefault();
@@ -80,7 +80,7 @@ export default function Signup(props:stateProps) {
       setLoading(true)
       await signup(email, password)
       console.log("account created")
-      history.push("/")
+      navigate("/")
       props.signupOpen(false)
     } catch(e){
       setError("failed to create an account")

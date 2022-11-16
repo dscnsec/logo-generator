@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './Home';
 import { AuthProvider } from './context/AuthContext';
-import {BrowserRouter, Switch, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route } from 'react-router-dom';
 
 
 
@@ -11,9 +11,9 @@ export default function App() {
 		<>
 		 <BrowserRouter>
 		    <AuthProvider>
-			  <Switch>
-				  <Route path="/" component={Home} />
-			  </Switch>
+			  <Routes>
+				  <Route path="/" element={<Home />} />
+			  </Routes>
              {/* <Home /> */}
 		    </AuthProvider>
 		  </BrowserRouter>

@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Link as RouteLink, useHistory} from 'react-router-dom';
+import {Link as RouteLink, useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import Alert from '@material-ui/lab/Alert';
@@ -66,7 +66,7 @@ export default function Login(props:stateProps) {
   const { login }:any = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   async function handleSubmit(e:any) {
     e.preventDefault()
@@ -75,10 +75,10 @@ export default function Login(props:stateProps) {
       setError("")
       setLoading(true)
       await login(email, password)
-      history.push("/")
+      navigate("/")
       props.loginOpen(false)
     } catch(e) {
-      setError(e.message)
+      // setError(e.message)
       console.log(e)
     }
 

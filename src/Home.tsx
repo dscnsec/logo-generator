@@ -8,9 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import GitHubButton from 'react-github-btn';
 import Button from '@material-ui/core/Button';
 import Login from './Login';
-import SignUp from './SignUp';
+import SignUp from './Signup';
 import { useAuth } from './context/AuthContext';
-import {useHistory} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -119,7 +119,7 @@ export default function ScrollableTabsButtonAuto() {
 	const [openSignUp, setOpenSignUp] = React.useState(false);
 	const { currentUser, logout }:any= useAuth();
 	const [error, setError] = React.useState('');
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
 
@@ -141,7 +141,7 @@ export default function ScrollableTabsButtonAuto() {
 
 		try{
 			await logout();
-			history.push('/')
+			navigate('/');
 		}catch {
 			setError('Failed to log out')
 		}

@@ -1,4 +1,4 @@
-import React , {useState, useRef, useEffect, Props} from "react";
+import React , {useState, useRef, useEffect} from "react";
 import MainToolBar from './MainToolBar'
 
 import WebFont from "webfontloader";
